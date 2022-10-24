@@ -25,39 +25,41 @@ void loop()
 
     if (isMessageComplete)
     {
-      if (message.length() > 0)
-        Serial.println(message);
-
-      // Vodka sprite
-      if (message == "Make Vodka Sprite")
+      switch (message)
       {
+      case "Make Vodka Sprite":
         Serial.println("Vodka Sprite in the making");
         bluetooth.println("Vodka Sprite");
-      }
-      else if (message == "Make Blue Lagoon")
-      {
+        break;
+
+      case "Make Blue Lagoon":
         Serial.println("Blue Lagoon in the making");
         bluetooth.println("Blue Lagoon");
-      }
-      else if (message == "Make Cosmo")
-      {
+        break;
+
+      case "Make Cosmo":
         Serial.println("Cosmo in the making");
         bluetooth.println("Cosmo");
-      }
-      else if (message == "Make Lemon Drop")
-      {
+        break;
+
+      case "Make Lemon Drop":
         Serial.println("Lemon Drop in the making");
         bluetooth.println("Lemon Drop");
-      }
-      else if (message == "Make Blue Moon")
-      {
+        break;
+
+      case "Make Blue Moon":
         Serial.println("Blue Moon in the making");
         bluetooth.println("Blue Moon");
-      }
-      else if (message == "Make Blue Gin Moon")
-      {
+        break;
+
+      case "Make Blue Gin Moon":
         Serial.println("Blue Gin Moon in the making");
         bluetooth.println("Blue Gin Moon");
+        break;
+
+      default:
+        Serial.println("Mensagem sem nenhum comando");
+        break;
       }
 
       message = "";
@@ -77,17 +79,3 @@ void readMessage()
       isMessageComplete = true;
   }
 }
-
-// void readMessage()
-// {
-//   while (bluetooth.available())
-//   {
-//     character = bluetooth.read();
-//     message.concat(character);
-//     if (character == '#')
-//     {
-//       Serial.println(message);
-//       message = "";
-//     }
-//   }
-// }
