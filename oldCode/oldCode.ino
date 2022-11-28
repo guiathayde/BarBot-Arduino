@@ -54,7 +54,7 @@ void loop()
   if (state == 'a')
   {
     Serial.println("Vodka Sprite in the making");
-    Mix(3000, 0, 0, 0, 5000, 0, 0, 0); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(3000, 0, 0, 0, 5000, 0, 0, 0); // Vodka, Sprite, Lime juice
   }
 
   // Blue Lagoon
@@ -82,56 +82,56 @@ void loop()
   if (state == 'e')
   {
     Serial.println("Blue Moon in the making");
-    Mix(2000, 0, 3000, 0, 1800, 1200, 1200, 0); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(2000, 0, 3000, 0, 1800, 1200, 1200, 0); // Vodka, Cranberry juice, Lime juice, Sugar water, Blue Curacao
   }
 
   // Blue Gin Moon
   if (state == 'f')
   {
     Serial.println("Blue Gin Moon in the making");
-    Mix(0, 0, 3000, 0, 1800, 1200, 1200, 2000); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(0, 0, 3000, 0, 1800, 1200, 1200, 2000); // Cranberry juice, Lime juice, Sugar water, Blue Curacao, Gin
   }
 
   // Double Strike
   if (state == 'i')
   {
     Serial.println("Double Strike in the making");
-    Mix(2000, 0, 3000, 0, 1800, 0, 1200, 0); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(2000, 0, 3000, 0, 1800, 0, 1200, 0); // Vodka, Cranberry juice, Lime juice, Blue Curacao
   }
 
   // Tom Collins
   if (state == 'h')
   {
     Serial.println("Tom Collins in the making");
-    Mix(0, 0, 0, 4000, 1800, 1800, 0, 2200); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(0, 0, 0, 4000, 1800, 1800, 0, 2200); // Sprite, Lime juice, Sugar water, Gin
   }
 
   // Flying Dutchman
   if (state == 'g')
   {
     Serial.println("Flying Dutchman in the making");
-    Mix(0, 2000, 0, 0, 1200, 1000, 0, 2000); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(0, 2000, 0, 0, 1200, 1000, 0, 2000); // Triple Sec, Lime juice, Sugar water, Gin
   }
 
   // London Cosmo
   if (state == 'j')
   {
     Serial.println("London Cosmo in the making");
-    Mix(0, 2000, 5000, 1800, 0, 0, 0, 2000); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(0, 2000, 5000, 1800, 0, 0, 0, 2000); // Triple Sec, Cranberry juice, Sprite, Gin
   }
 
   // Vodka Cranberry
   if (state == 'k')
   {
     Serial.println("Vodka Cranberry in the making");
-    Mix(2000, 0, 5000, 0, 0, 1200, 0, 0); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(2000, 0, 5000, 0, 0, 1200, 0, 0); // Vodka, Cranberry juice, Sugar water
   }
 
   // Cranberry Gin
   if (state == 'l')
   {
     Serial.println("Cranberry Gin in the making");
-    Mix(0, 0, 5000, 0, 2000, 0, 0, 2200); // Vodka, Triple Sec, Cranberry juice, Sprite, Lime juice, Sugar water, Blue Curacao, Gin
+    Mix(0, 0, 5000, 0, 2000, 0, 0, 2200); // Cranberry juice, Lime juice, Gin
   }
 
   // Testin and maintenance options
