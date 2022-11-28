@@ -2,9 +2,9 @@ Bebidas BarBot
 
 Bebidas pré-necessárias:
 - Vodka
-- Licor cítrico com sabor de laranja
+- Licor cítrico com sabor de laranja (decidimos retirar)
 - Xarope de cranberry
-- Sprite
+- Sprite (decidimos retirar)
 - Suco de limão
 - Água com açúcar
 - Licor Curuaçau Blue Stock
@@ -12,18 +12,23 @@ Bebidas pré-necessárias:
 
 Em quantos drinks essa bebida é utilizada?
 - Vodka: 7
-- Licor cítrico com sabor de laranja: 4
+- Licor cítrico com sabor de laranja: 4 (decidimos retirar)
 - Xarope de cranberry: 7
-- Sprite: 3
+- Sprite: 3 (decidimos retirar)
 - Suco de limão: 10
 - Água com açúcar: 6
 - Licor Curuaçau Blue Stock: 3
 - Gin: 5
 
+(bebida não disponivel)
 Vodka Sprite:
 - 50 ml de Vodka
 - 50 ml de Suco de limão
-- 100 ml de Sprite
+- 100 ml de Sprite (não utilizar)
+
+Caipirinha:
+- 50 ml de Vodka
+- 150 ml de Suco de limão
 
 Blue Lagoon:
 - 50 ml de Vodka
@@ -32,13 +37,13 @@ Blue Lagoon:
 
 Cosmo:
 - 40 ml de Vodka
-- 15 ml de Licor cítrico com sabor de laranja
+- 15 ml de Licor cítrico com sabor de laranja (não utilizar)
 - 30 ml de Xarope de cranberry
 - 15 ml de Suco de limão
 
 Lemon Drop:
 - 50 ml de Vodka
-- 15 ml de Licor cítrico com sabor de laranja
+- 15 ml de Licor cítrico com sabor de laranja (não utilizar)
 - 30 ml de Suco de limão
 - 30 ml de Água com açúcar
 
@@ -63,21 +68,21 @@ Double Strike:
 - 20 ml de Licor Curuaçau Blue Stock
 
 Tom Collins:
-- 65 ml de Sprite
+- 65 ml de Sprite (não utilizar)
 - 30 ml de Suco de limão
 - 30 ml de Água com açúcar
 - 35 ml de Gin
 
 Flying Dutchman:
-- 30 ml de Licor cítrico com sabor de laranja
+- 30 ml de Licor cítrico com sabor de laranja (não utilizar)
 - 20 ml de Suco de limão
 - 15 ml de Água com açúcar
 - 30 ml de Gin
 
 London Cosmo:
-- 30 ml de Licor cítrico com sabor de laranja
+- 30 ml de Licor cítrico com sabor de laranja (não utilizar)
 - 80 ml de Xarope de cranberry
-- 30 ml de Sprite
+- 30 ml de Sprite (não utilizar)
 - 30 ml de Gin
 
 Vodka Cranberry:

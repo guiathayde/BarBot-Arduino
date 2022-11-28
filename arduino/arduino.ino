@@ -66,6 +66,7 @@ void loop()
     {
       message.remove(0, 2);
       Serial.println("Comando recebido: " + message);
+      bluetooth.println("Comando recebido: " + message);
 
       if (printAvailableSpaceMemory())
         ;
@@ -101,7 +102,7 @@ void readMessage()
 
 boolean makeDrink()
 {
-  if (message.equals("Make Vodka Sprite"))
+  if (message.equals("Make Caipirinha"))
   {
     mix(3000, 0, 0, 0, 5000, 0, 0, 0);
     return true;
