@@ -5,13 +5,12 @@ const int pinoRX = 0; // PINO DIGITAL (RX)
 const int pinoTX = 1; // PINO DIGITAL (TX)
 
 int Vodka = 2;
-int Cointreau = 3;
-int CranberryJuice = 4;
-int Sprite = 5;
-int LemonJuice = 6;
-int SugarWater = 7;
-int BlueCur = 8;
-int Gin = 9;
+int CranberryJuice = 3;
+int LemonJuice = 4;
+int SugarWater = 5;
+int BlueCur = 6;
+int Gin = 7;
+int Mixer = 8;
 int TimeBetweenPours = 500;
 
 String message;
@@ -48,12 +47,13 @@ void setup()
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
 
-  digitalWrite(2, LOW);
-  digitalWrite(3, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(5, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, HIGH);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, HIGH);
+  digitalWrite(6, HIGH);
+  digitalWrite(7, HIGH);
+  digitalWrite(8, HIGH);
 }
 
 void loop()
@@ -68,13 +68,19 @@ void loop()
       Serial.println("Comando recebido: " + message);
       bluetooth.println("Comando recebido: " + message);
 
-      if (printAvailableSpaceMemory())
+      if (message.equals("test"))
+      {
+        mix(2000, 2000, 2000, 2000, 2000, 2000);
+      }
+      else if (printAvailableSpaceMemory())
         ;
       else if (sendInitialSetup())
         ;
       else if (setupDrinks())
         ;
       else if (makeDrink())
+        ;
+      else if (makeYourOwnDrink())
         ;
       else
       {
@@ -104,66 +110,88 @@ boolean makeDrink()
 {
   if (message.equals("Make Caipirinha"))
   {
-    mix(3000, 0, 0, 0, 5000, 0, 0, 0);
+    mix(3000, 0, 0, 0, 5000, 0);
     return true;
   }
   else if (message.equals("Make Blue Lagoon"))
   {
-    mix(2000, 0, 0, 5000, 1800, 1000, 1800, 0);
+    mix(2000, 0, 0, 5000, 1800, 1000);
     return true;
   }
   else if (message.equals("Make Cosmo"))
   {
-    mix(2500, 1500, 3800, 0, 1200, 1200, 0, 0);
+    mix(2500, 1500, 3800, 0, 1200, 1200);
     return true;
   }
   else if (message.equals("Make Lemon Drop"))
   {
-    mix(1500, 1500, 0, 0, 1800, 1200, 0, 0);
+    mix(1500, 1500, 0, 0, 1800, 1200);
     return true;
   }
   else if (message.equals("Make Blue Moon"))
   {
-    mix(2000, 0, 3000, 0, 1800, 1200, 1200, 0);
+    mix(2000, 0, 3000, 0, 1800, 1200);
     return true;
   }
   else if (message.equals("Make Blue Gin Moon"))
   {
-    mix(0, 0, 3000, 0, 1800, 1200, 1200, 2000);
+    mix(0, 0, 3000, 0, 1800, 1200);
     return true;
   }
   else if (message.equals("Make Double Strike"))
   {
-    mix(2000, 0, 3000, 0, 1800, 0, 1200, 0);
+    mix(2000, 0, 3000, 0, 1800, 0);
     return true;
   }
   else if (message.equals("Make Tom Collins"))
   {
-    mix(0, 0, 0, 4000, 1800, 1800, 0, 2200);
+    mix(0, 0, 0, 4000, 1800, 1800);
     return true;
   }
   else if (message.equals("Make Flying Dutchman"))
   {
-    mix(0, 2000, 0, 0, 1200, 1000, 0, 2000);
+    mix(0, 2000, 0, 0, 1200, 1000);
     return true;
   }
   else if (message.equals("Make London Cosmo"))
   {
-    mix(0, 2000, 5000, 1800, 0, 0, 0, 2000);
+    mix(0, 2000, 5000, 1800, 0, 0);
     return true;
   }
   else if (message.equals("Make Vodka Cranberry"))
   {
-    mix(2000, 0, 5000, 0, 0, 1200, 0, 0);
+    mix(2000, 0, 5000, 0, 0, 1200);
     return true;
   }
   else if (message.equals("Make Cranberry Gin"))
   {
-    mix(0, 0, 5000, 0, 2000, 0, 0, 2200);
+    mix(0, 0, 5000, 0, 2000, 0);
     return true;
   }
 
   return false;
+}
+
+boolean makeYourOwnDrink()
+{
+  if (message.substring(0, 16) = "MakeYourOwnDrink")
+  {
+    int delayTimes[6];
+    for (int i = 1; i < 7; i++)
+    {
+      String quantity = getValue(message, ':', i);
+
+      if (quantity.length() > 0)
+      {
+        int quantityInt = quantity.toInt();
+        delayTimes[i - 1] = quantityInt * 100;
+      }
+      else
+        delayTimes[i - 1] = 0;
+    }
+
+    mix(delayTimes[0], delayTimes[1], delayTimes[2], delayTimes[3], delayTimes[4], delayTimes[5]);
+  }
 }
 
 boolean printAvailableSpaceMemory()
@@ -192,10 +220,24 @@ boolean sendInitialSetup()
     Drink drinkFive = getDrinkSetup(drinkFiveAddress);
     Drink drinkSix = getDrinkSetup(drinkSixAddress);
 
+    String initialSetup = "InitialSetup";
     String separator = ":";
-    String initialSetup = drinkOne.name + separator + drinkOne.quantity + separator + drinkTwo.name + separator + drinkTwo.quantity + separator + drinkThree.name + separator + drinkThree.quantity + separator + drinkFour.name + separator + drinkFour.quantity + separator + drinkFive.name + separator + drinkFive.quantity + separator + drinkSix.name + separator + drinkSix.quantity;
+    String initialDrinksSetup = initialSetup + separator +
+                                drinkOne.name + separator +
+                                drinkOne.quantity + separator +
+                                drinkTwo.name + separator +
+                                drinkTwo.quantity + separator +
+                                drinkThree.name + separator +
+                                drinkThree.quantity + separator +
+                                drinkFour.name + separator +
+                                drinkFour.quantity + separator +
+                                drinkFive.name + separator +
+                                drinkFive.quantity + separator +
+                                drinkSix.name + separator +
+                                drinkSix.quantity;
 
-    bluetooth.print(initialSetup);
+    Serial.println(initialDrinksSetup);
+    bluetooth.print(initialDrinksSetup);
 
     return true;
   }
@@ -203,48 +245,30 @@ boolean sendInitialSetup()
   return false;
 }
 
-void setupDrink(int drinkAddress)
-{
-  String nameDrink = getValue(message, ':', 1);
-  String quantityDrinkString = getValue(message, ':', 2);
-  int quantityDrink = quantityDrinkString.toInt();
-
-  saveDrinkSetup(nameDrink, quantityDrink, drinkAddress);
-
-  Serial.println("Drink" + nameDrink + "Changed");
-  bluetooth.println("Drink" + nameDrink + "Changed");
-}
-
 boolean setupDrinks()
 {
-  if (message.substring(0, 13) == "drinkOneSetup")
+  if (message.substring(0, 10) == "DrinkSetup")
   {
-    setupDrink(drinkOneAddress);
-    return true;
-  }
-  else if (message.substring(0, 13) == "drinkTwoSetup")
-  {
-    setupDrink(drinkTwoAddress);
-    return true;
-  }
-  else if (message.substring(0, 15) == "drinkThreeSetup")
-  {
-    setupDrink(drinkThreeAddress);
-    return true;
-  }
-  else if (message.substring(0, 14) == "drinkFourSetup")
-  {
-    setupDrink(drinkFourAddress);
-    return true;
-  }
-  else if (message.substring(0, 14) == "drinkFiveSetup")
-  {
-    setupDrink(drinkFiveAddress);
-    return true;
-  }
-  else if (message.substring(0, 13) == "drinkSixSetup")
-  {
-    setupDrink(drinkSixAddress);
+    int addressList[6] = {
+        drinkOneAddress,
+        drinkTwoAddress,
+        drinkThreeAddress,
+        drinkFourAddress,
+        drinkFiveAddress,
+        drinkSixAddress};
+    for (int i = 1, j = 0; i < 13; i += 2, j++)
+    {
+      String drinkName = getValue(message, ':', i);
+      String drinkQuantityString = getValue(message, ':', i + 1);
+
+      int quantityDrink = drinkQuantityString.toInt();
+
+      saveDrinkSetup(drinkName, quantityDrink, addressList[j]);
+    }
+
+    Serial.println("DrinksUpdatedSuccessfully");
+    bluetooth.println("DrinksUpdatedSuccessfully");
+
     return true;
   }
 
@@ -293,9 +317,18 @@ Drink getDrinkSetup(int address)
   return drink;
 }
 
-void mix(int DelayTimeVodka, int DelayTimeCointreau, int DelayTimeCranberryJuice, int DelayTimeSprite, int DelayTimeLemonJuice, int DelayTimeSugarWater, int DelayTimeBlueCur, int DelayTimeGin)
+void updateDrinkQuantity(int delayTime, int address)
 {
-  String drinkName = message.substring(5);
+  Drink drink = getDrinkSetup(drinkOneAddress);
+  drink.quantity -= delayTime / 100;
+
+  saveDrinkSetup(drink.name, drink.quantity, address);
+}
+
+// 1000ms == 10ml
+void mix(int DelayTimeVodka, int DelayTimeCranberryJuice, int DelayTimeLemonJuice, int DelayTimeSugarWater, int DelayTimeBlueCur, int DelayTimeGin)
+{
+  String drinkName = message.substring(0, 5);
   String makingMessage = drinkName + " in the making";
   String doneMessage = drinkName + " done";
 
@@ -303,46 +336,54 @@ void mix(int DelayTimeVodka, int DelayTimeCointreau, int DelayTimeCranberryJuice
   bluetooth.println(makingMessage);
 
   delay(800);
-  digitalWrite(Vodka, HIGH);
-  delay(DelayTimeVodka);
   digitalWrite(Vodka, LOW);
+  delay(DelayTimeVodka);
+  digitalWrite(Vodka, HIGH);
   delay(TimeBetweenPours);
 
-  digitalWrite(Cointreau, HIGH);
-  delay(DelayTimeCointreau);
-  digitalWrite(Cointreau, LOW);
-  delay(TimeBetweenPours);
-
-  digitalWrite(CranberryJuice, HIGH);
-  delay(DelayTimeCranberryJuice);
   digitalWrite(CranberryJuice, LOW);
+  delay(DelayTimeCranberryJuice);
+  digitalWrite(CranberryJuice, HIGH);
   delay(TimeBetweenPours);
 
-  digitalWrite(Sprite, HIGH);
-  delay(DelayTimeSprite);
-  digitalWrite(Sprite, LOW);
-  delay(TimeBetweenPours);
-
-  digitalWrite(LemonJuice, HIGH);
-  delay(DelayTimeLemonJuice);
   digitalWrite(LemonJuice, LOW);
+  delay(DelayTimeLemonJuice);
+  digitalWrite(LemonJuice, HIGH);
   delay(TimeBetweenPours);
 
-  digitalWrite(SugarWater, HIGH);
-  delay(DelayTimeSugarWater);
   digitalWrite(SugarWater, LOW);
+  delay(DelayTimeSugarWater);
+  digitalWrite(SugarWater, HIGH);
   delay(TimeBetweenPours);
 
-  digitalWrite(BlueCur, HIGH);
-  delay(DelayTimeBlueCur);
   digitalWrite(BlueCur, LOW);
+  delay(DelayTimeBlueCur);
+  digitalWrite(BlueCur, HIGH);
   delay(TimeBetweenPours);
 
-  digitalWrite(Gin, HIGH);
-  delay(DelayTimeGin);
   digitalWrite(Gin, LOW);
+  delay(DelayTimeGin);
+  digitalWrite(Gin, HIGH);
+  delay(TimeBetweenPours);
+
+  digitalWrite(Mixer, LOW);
+  delay(5000);
+  digitalWrite(Mixer, HIGH);
   delay(TimeBetweenPours);
 
   Serial.println(doneMessage);
   bluetooth.println(doneMessage);
+
+  if (DelayTimeVodka > 0)
+    updateDrinkQuantity(DelayTimeVodka, drinkOneAddress);
+  if (DelayTimeCranberryJuice > 0)
+    updateDrinkQuantity(DelayTimeCranberryJuice, drinkTwoAddress);
+  if (DelayTimeLemonJuice > 0)
+    updateDrinkQuantity(DelayTimeLemonJuice, drinkThreeAddress);
+  if (DelayTimeSugarWater > 0)
+    updateDrinkQuantity(DelayTimeSugarWater, drinkFourAddress);
+  if (DelayTimeBlueCur > 0)
+    updateDrinkQuantity(DelayTimeBlueCur, drinkFiveAddress);
+  if (DelayTimeGin > 0)
+    updateDrinkQuantity(DelayTimeGin, drinkSixAddress);
 }
