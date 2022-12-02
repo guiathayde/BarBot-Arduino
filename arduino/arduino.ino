@@ -191,7 +191,11 @@ boolean makeYourOwnDrink()
     }
 
     mix(delayTimes[0], delayTimes[1], delayTimes[2], delayTimes[3], delayTimes[4], delayTimes[5]);
+
+    return true;
   }
+
+  return false;
 }
 
 boolean printAvailableSpaceMemory()
