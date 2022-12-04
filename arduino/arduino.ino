@@ -66,15 +66,8 @@ void loop()
     {
       message.remove(0, 2);
       Serial.println("Comando recebido: " + message);
-      bluetooth.println("Comando recebido: " + message);
 
-      if (message.equals("test"))
-      {
-        mix(2000, 2000, 2000, 2000, 2000, 2000);
-      }
-      else if (printAvailableSpaceMemory())
-        ;
-      else if (sendInitialSetup())
+      if (sendInitialSetup())
         ;
       else if (setupDrinks())
         ;
@@ -110,62 +103,62 @@ boolean makeDrink()
 {
   if (message.equals("Make Caipirinha"))
   {
-    mix(3000, 0, 0, 0, 5000, 0);
+    mix(5000, 0, 10000, 0, 0, 0);
     return true;
   }
   else if (message.equals("Make Blue Lagoon"))
   {
-    mix(2000, 0, 0, 5000, 1800, 1000);
+    mix(5000, 0, 10000, 0, 2500, 0);
     return true;
   }
   else if (message.equals("Make Cosmo"))
   {
-    mix(2500, 1500, 3800, 0, 1200, 1200);
+    mix(4000, 3000, 1500, 0, 0, 0);
     return true;
   }
   else if (message.equals("Make Lemon Drop"))
   {
-    mix(1500, 1500, 0, 0, 1800, 1200);
+    mix(5000, 0, 3000, 3000, 0, 0);
     return true;
   }
   else if (message.equals("Make Blue Moon"))
   {
-    mix(2000, 0, 3000, 0, 1800, 1200);
+    mix(3000, 5000, 3000, 2000, 2000, 0);
     return true;
   }
   else if (message.equals("Make Blue Gin Moon"))
   {
-    mix(0, 0, 3000, 0, 1800, 1200);
+    mix(0, 5000, 3000, 2000, 2000, 3000);
     return true;
   }
   else if (message.equals("Make Double Strike"))
   {
-    mix(2000, 0, 3000, 0, 1800, 0);
+    mix(3000, 5000, 3000, 0, 2000, 0);
     return true;
   }
   else if (message.equals("Make Tom Collins"))
   {
-    mix(0, 0, 0, 4000, 1800, 1800);
+    mix(0, 0, 3000, 1500, 0, 3000);
     return true;
   }
   else if (message.equals("Make Flying Dutchman"))
   {
-    mix(0, 2000, 0, 0, 1200, 1000);
+    mix(0, 0, 2000, 1500, 0, 3000);
     return true;
   }
   else if (message.equals("Make London Cosmo"))
   {
-    mix(0, 2000, 5000, 1800, 0, 0);
+    mix(0, 8000, 0, 0, 0, 3000);
     return true;
   }
   else if (message.equals("Make Vodka Cranberry"))
   {
-    mix(2000, 0, 5000, 0, 0, 1200);
+    mix(3000, 8000, 0, 2000, 0, 0);
     return true;
   }
   else if (message.equals("Make Cranberry Gin"))
   {
-    mix(0, 0, 5000, 0, 2000, 0);
+    mix(0, 8000, 3000, 0, 0, 3500);
     return true;
   }
 
@@ -174,7 +167,8 @@ boolean makeDrink()
 
 boolean makeYourOwnDrink()
 {
-  if (message.substring(0, 16) = "MakeYourOwnDrink")
+  String msg = message.substring(0, 16);
+  if (msg.equals("MakeYourOwnDrink"))
   {
     int delayTimes[6];
     for (int i = 1; i < 7; i++)
@@ -192,21 +186,6 @@ boolean makeYourOwnDrink()
 
     mix(delayTimes[0], delayTimes[1], delayTimes[2], delayTimes[3], delayTimes[4], delayTimes[5]);
 
-    return true;
-  }
-
-  return false;
-}
-
-boolean printAvailableSpaceMemory()
-{
-  if (message.equals("Print Available Space Memory"))
-  {
-    Serial.print("EEPROM.length(): ");
-    Serial.println(EEPROM.length());
-
-    bluetooth.print("EEPROM.length(): ");
-    bluetooth.println(EEPROM.length());
     return true;
   }
 
@@ -241,7 +220,7 @@ boolean sendInitialSetup()
                                 drinkSix.quantity;
 
     Serial.println(initialDrinksSetup);
-    bluetooth.print(initialDrinksSetup);
+    bluetooth.println(initialDrinksSetup);
 
     return true;
   }
@@ -251,7 +230,8 @@ boolean sendInitialSetup()
 
 boolean setupDrinks()
 {
-  if (message.substring(0, 10) == "DrinkSetup")
+  String msg = message.substring(0, 10);
+  if (msg.equals("DrinkSetup"))
   {
     int addressList[6] = {
         drinkOneAddress,
@@ -267,7 +247,8 @@ boolean setupDrinks()
 
       int quantityDrink = drinkQuantityString.toInt();
 
-      saveDrinkSetup(drinkName, quantityDrink, addressList[j]);
+      if (drinkName.length() > 0 && quantityDrink > 0)
+        saveDrinkSetup(drinkName, quantityDrink, addressList[j]);
     }
 
     Serial.println("DrinksUpdatedSuccessfully");
@@ -323,7 +304,7 @@ Drink getDrinkSetup(int address)
 
 void updateDrinkQuantity(int delayTime, int address)
 {
-  Drink drink = getDrinkSetup(drinkOneAddress);
+  Drink drink = getDrinkSetup(address);
   drink.quantity -= delayTime / 100;
 
   saveDrinkSetup(drink.name, drink.quantity, address);
